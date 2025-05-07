@@ -5,10 +5,78 @@
 }
 
 body {
-    font-family: Arial, sans-serif;
-    line-height: 1.6;
-    background-color: #f4f4f4;
+    font-family: 'Inter', sans-serif;
+    background-color: #000;
+    color: #fff;
+    overflow: hidden;
+    min-height: 100vh;
 }
+
+.instructions {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+    font-size: 1.2rem;
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.7);
+    padding: 10px 20px;
+    border-radius: 5px;
+    pointer-events: none;
+}
+
+.video-container {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+}
+
+.video-box {
+    position: absolute;
+    z-index: 9;
+    text-align: center;
+    transition: transform 0.2s ease;
+}
+
+.video-box:hover {
+    transform: scale(1.02);
+}
+
+.video-header {
+    padding: 10px;
+    cursor: move;
+    z-index: 10;
+    background-color: rgba(0, 0, 0, 0.7);
+    border-radius: 8px;
+}
+
+.video-header h1 {
+    font-size: 1.4rem;
+    margin-bottom: 10px;
+    color: #fff;
+}
+
+.video-header iframe {
+    border-radius: 4px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Initial positioning for video boxes */
+#mydiv { top: 3%; right: 13%; }
+#bigdiv { top: 22%; right: 30%; }
+#bigdiv1 { top: 14%; right: 30%; }
+#bigdiv2 { top: 8%; right: 30%; }
+#bigdiv3 { top: 15%; right: 30%; }
+#bigdiv4 { top: 2%; right: 30%; }
+#bigdiv5 { top: 8%; right: 30%; }
+#bigdiv6 { top: 12%; right: 30%; }
+#bigdiv7 { top: 2%; right: 30%; }
+#bigdiv8 { top: 12%; right: -20%; }
+#bigdiv9 { top: 20%; right: -15%; }
+#bigdiv10 { top: 15%; right: -12%; }
+#bigdiv11 { top: 26%; right: -13%; }
+#bigdiv12 { top: 30%; right: -11%; }
 
 .container {
     max-width: 800px;
