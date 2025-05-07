@@ -4,62 +4,191 @@
     box-sizing: border-box;
 }
 
+:root {
+    --button-bg: #ffffff;
+    --button-border: #e2e8f0;
+    --button-hover: #f8fafc;
+    --button-shadow: rgba(0, 0, 0, 0.05);
+    --button-gradient: linear-gradient(135deg, #e2e8f0 0%, #f8fafc 100%);
+}
+
 body {
     font-family: 'Inter', sans-serif;
-    background-color: #000;
-    color: #fff;
+    background-color: #ffffff;
+    color: #1e293b;
     overflow: hidden;
     min-height: 100vh;
+}
+
+.sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 300px;
+    height: 100vh;
+    padding: 20px;
+    background: var(--button-bg);
+    border-right: 1px solid var(--button-border);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    z-index: 1000;
+}
+
+.video-button {
+    padding: 12px 16px;
+    background: var(--button-bg);
+    border: 1px solid var(--button-border);
+    border-radius: 8px;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: #1e293b;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 2px 4px var(--button-shadow);
+    text-align: left;
+}
+
+.video-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: var(--button-gradient);
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    z-index: -1;
+}
+
+.video-button:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 6px var(--button-shadow);
+}
+
+.video-button:hover::before {
+    opacity: 1;
+}
+
+.video-button:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 4px var(--button-shadow);
+}
+
+.video-button.active {
+    background: var(--button-hover);
+    border-color: #94a3b8;
 }
 
 .instructions {
     position: fixed;
     top: 20px;
-    left: 50%;
+    left: calc(300px + 50%);
     transform: translateX(-50%);
     z-index: 1000;
     font-size: 1.2rem;
     text-align: center;
-    background-color: rgba(0, 0, 0, 0.7);
+    background-color: rgba(255, 255, 255, 0.9);
     padding: 10px 20px;
     border-radius: 5px;
     pointer-events: none;
+    box-shadow: 0 2px 4px var(--button-shadow);
 }
 
 .video-container {
     position: relative;
-    width: 100vw;
+    width: calc(100vw - 300px);
     height: 100vh;
+    margin-left: 300px;
 }
 
 .video-box {
     position: absolute;
     z-index: 9;
     text-align: center;
-    transition: transform 0.2s ease;
+    transition: transform 0.1s cubic-bezier(0.2, 0, 0, 1), 
+                opacity 0.3s ease, 
+                visibility 0.3s ease,
+                box-shadow 0.2s ease;
+    background: var(--button-bg);
+    border-radius: 8px;
+    box-shadow: 0 4px 6px var(--button-shadow);
+    opacity: 1;
+    visibility: visible;
+    will-change: transform;
+    transform-origin: center center;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    perspective: 1000px;
+    -webkit-perspective: 1000px;
+    width: 320px;
+}
+
+.video-box iframe {
+    width: 320px;
+    height: 180px;
+    border: none;
+    border-radius: 4px;
+}
+
+.video-box.hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: scale(0.95);
 }
 
 .video-box:hover {
     transform: scale(1.02);
+    box-shadow: 0 6px 12px var(--button-shadow);
+}
+
+.video-box.dragging {
+    cursor: grabbing;
+    box-shadow: 0 12px 24px var(--button-shadow);
+    z-index: 1000;
+    transition: none;
+    transform-origin: center center;
+}
+
+.video-box:not(.dragging) {
+    transition: transform 0.3s cubic-bezier(0.2, 0, 0, 1),
+                opacity 0.3s ease,
+                visibility 0.3s ease,
+                box-shadow 0.2s ease;
 }
 
 .video-header {
-    padding: 10px;
-    cursor: move;
+    padding: 8px;
+    cursor: grab;
     z-index: 10;
-    background-color: rgba(0, 0, 0, 0.7);
+    background-color: rgba(255, 255, 255, 0.95);
     border-radius: 8px;
+    user-select: none;
+    -webkit-user-select: none;
+    transition: background-color 0.2s ease;
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+}
+
+.video-header:active {
+    cursor: grabbing;
+    background-color: rgba(255, 255, 255, 0.98);
 }
 
 .video-header h1 {
-    font-size: 1.4rem;
-    margin-bottom: 10px;
-    color: #fff;
+    font-size: 1.1rem;
+    margin-bottom: 6px;
+    color: #1e293b;
 }
 
 .video-header iframe {
     border-radius: 4px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 6px var(--button-shadow);
 }
 
 /* Initial positioning for video boxes */
